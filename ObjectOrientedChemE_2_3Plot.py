@@ -1,12 +1,4 @@
-# from tkinter import font
-# from cmath import log
-# from turtle import width
-# from cProfile import label
-# from statistics import LinearRegression
-from asyncio.constants import LOG_THRESHOLD_FOR_CONNLOST_WRITES
-from cmath import log
-from re import I
-from struct import unpack
+#Wesley Johanson
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np 
@@ -54,7 +46,6 @@ class ChEplot:
 	def segmentData(self):
 		pass
 
-
 	#Linear Regression
 	@staticmethod
 	def	rSquared(x, y):
@@ -67,23 +58,24 @@ class ChEplot:
 			for fn in range(self.numDataVars, self.numDataSets):
 				m, b = np.polyfit(self.data[0],self.data[fn],1)
 				y = (m * self.data[0]) + b
-				self.figure.axis[var].plot(self.data[0], y, color=self.LRegLineColors[fn-self.numDataVars], linewidth=width ,linestyle=style)
+				self.figure.axis[var].plot(self.data[0], y, \
+					color=self.LRegLineColors[fn-self.numDataVars], \
+						linewidth=width ,linestyle=style)
 	
 	def setLRegLineColors(self, colors=[]):
 		self.LRegLineColors = colors
 
-	def printAllRSquared(self, precision=3):
-		print(self.dataLabels)
+	def printAllRSquared(self, precision=5):
 		for fn in range(self.numDataVars, self.numDataSets):
 			for var in range(0, self.numDataVars):
 				rSquared = ChEplot.rSquared(self.data[0],self.data[fn])
-				rstr = "R^2 = %1." + str(precision) + "f" 
-				print( rstr % rSquared, "\t", self.dataLabels[fn - self.numDataVars], \
-					"with respect to", self.dataLabels[var])
+				rStr = "R^2 = %1." + str(precision) + "f" 
+				rStr = rStr % rSquared
+				print( f"{rStr:<15}{self.dataLabels[fn-self.numDataVars]:<30}{'with respect to':<20}{self.dataLabels[var]:<10}")
 	
 	#Plot parameters	
 	def setDataStyles(self, styles: list):		self.lineStyles = styles
-	def	setDataColors(self, colors: list): 		self.dataColors = colors 
+	def	setDataColors(self, colors: list): 	self.dataColors = colors; self.setLRegLineColors(colors);
 	def setFnLabels(self, labels: list[str]):	self.fnLabels = labels
 
 	def setAxisLabels(self, x: str, y:str, indepVar=0, xpadding=5, ypadding=5):
@@ -116,30 +108,34 @@ class ChEplot:
 
 	def savePlot(self, filename="poop.png", _dpi=900, _transparent=False, _bbox_inches='tight'):
 		plt.savefig(filename, dpi=_dpi, transparent=_transparent, bbox_inches=_bbox_inches)
+	
+	def close(self): plt.close(self.figure)
 
 
 dataNames = ["Log_10(Reynold's Number)", "Log_10(Friction Factor)[Eqn 6]", \
 	"Log_10(Friction Factor)[Eqn15]", "Log_10(Friction Factor)[Eqn16]"]
-fnLabels= ["Fanning $\mathcal{f}$", "$\mathcal{Re}<2*10^3$", \
+fnLabels= ["Fanning $\mathcal{f}$", "$\mathcal{Re}<2\cdot10^3$", \
 	"$2100<\mathcal{Re} < 10^5$" ]
+
 
 plot = ChEplot()
 #Data
 plot.loadCSV('logRe_logf.csv', dataNames, indepVars=1)
 #Plotting
 plot.setFnLabels(fnLabels)
-plot.setDataColors(['b','g','r'])
+plot.setDataColors(['#89CFF0','#800020','#301934'])
 plot.plotData(width=6,height=6)
 #Regression
-plot.setLRegLineColors(['b','g','r'])
 plot.plotLRegLines(width=0.1)
 plot.printAllRSquared()
 #Plot Parameters 
-plot.setAxisLabels("$Log_{10}(\mathcal{Re})$", "$Log_{10}(\mathcal{f})$")
+plot.setAxisLabels("$Log_{10}(\mathcal{Re})$", "$Log_{10}(\mathcal{f})$", xpadding=5, ypadding=5)
 plot.setTicProps()
+plot.setNumTics(0.1, 0.25, 3,3)
 plot.showLegend()
 plot.changeFont()
 #Presentation
+# plot.close()
 plot.showPlot()
-plot.savePlot(_dpi=300)
+plot.savePlot(filename="log(Re)_vs_log(f).png",_dpi=600)
 	

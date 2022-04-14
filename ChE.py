@@ -6,7 +6,6 @@ import matplotlib.font_manager as fm
 from sklearn.linear_model import LinearRegression
 
 class ChEplot:
-
 	def __init__(self):
 		self.figure=None
 		self.dataLabels=None
@@ -15,21 +14,33 @@ class ChEplot:
 		self.numDataFns=None
 		self.numDataSets=None
 		self.data=None
-	
-	#Print Info Functions
-	def	printAllData(self):
-		# print("figure =" ,i )
-		pass
+		self.fxns2plot=None
 
-	#Data 
+	#Data setter/getter/modifier functions
 	def loadCSV(self, filename: str, names=None, indepVars=1, skip=0):
+		"""Loads each column of data from the CSV file into a row of a numpy
+		array stored in self.data
+		
+		'names' is a list of names for the data sets in each col of the CSV"""
 		self.data = np.loadtxt(filename, unpack=True, \
 												delimiter=',',skiprows=skip)	
 		if names is not None: self.dataLabels = names
 		self.numDataVars = indepVars
 		self.numDataSets = len(self.data) 
 		self.numDataFns = self.numDataSets - self.numDataVars
+		
+	def segmentData(self):
+		pass
+
+	#Printers
+	def	printAllData(self):
+		pass
+
+	def	printData(self):
+		"print all data points in self.data"
+		print(self.data)
 	
+	#Setters	
 	def setDataLabel(self, names):
 		"""
 		Stores a list of strings into the instance, where each str in the list 
@@ -44,17 +55,12 @@ class ChEplot:
 		self.numDataSets = len(self.data)
 		self.numDataFns = self.numDataSets - self.numDataVars
 
-
-	
-	def	printData(self):
-	"print all data points in self.data"
-		print(self.data)
-	
 	def setIndepVars(self, vars):
+		"Vars are the first arrays in the self.data matrix"
 		self.setIndepVars = vars
 
-
-	def plotData(self, width, height):
+	#Plotting
+	def plotData(self, width, height, fxns2graph: list):
 		self.figure = plt.figure(figsize=(width, height))
 		L, B, W, H = [0.15, 0.1, 0.80, 0.85]
 		self.figure.axis = []
@@ -68,16 +74,6 @@ class ChEplot:
 				clr = self.dataColors[fn - self.numDataVars]
 				self.figure.axis[var].plot(x,y,'.',label=lbl,color=clr)
 	
-	def segmentData(self):
-		pass
-
-	#Linear Regression
-	@staticmethod
-	def	rSquared(x, y):
-		x = x.reshape((-1,1))
-		y_reg = LinearRegression().fit(x,y)
-		return y_reg.score(x,y)
-
 	def plotLRegLines(self, width=0.5, style='-', color='b'):
 		for var in range(0, self.numDataVars):
 			for fn in range(self.numDataVars, self.numDataSets):
@@ -87,6 +83,16 @@ class ChEplot:
 					color=self.LRegLineColors[fn-self.numDataVars], \
 						linewidth=width ,linestyle=style)
 	
+	def plotErrorBars(self):
+		pass
+	
+	#Linear Regression & Statistics
+	@staticmethod
+	def	rSquared(x, y):
+		x = x.reshape((-1,1))
+		y_reg = LinearRegression().fit(x,y)
+		return y_reg.score(x,y)
+		
 	def setLRegLineColors(self, colors=[]):
 		self.LRegLineColors = colors
 
@@ -98,10 +104,14 @@ class ChEplot:
 				rStr = rStr % rSquared
 				print( f"{rStr:<15}{self.dataLabels[fn-self.numDataVars]:<30}{'with respect to':<20}{self.dataLabels[var]:<10}")
 	
-	#Plot parameters	
-	def setDataStyles(self, styles: list):		self.lineStyles = styles
-	def	setDataColors(self, colors: list): 	self.dataColors = colors; self.setLRegLineColors(colors);
-	def setFnLabels(self, labels: list[str]):	self.fnLabels = labels
+	#Plot: Setters
+	def setDataStyles(self, styles: list):	
+		self.lineStyles = styles
+	def	setDataColors(self, colors: list): 	
+		self.dataColors = colors 
+		self.setLRegLineColors(colors)
+	def setFnLabels(self, labels: list[str]):	
+		self.fnLabels = labels
 
 	def setAxisLabels(self, x: str, y:str, indepVar=0, xpadding=5, ypadding=5):
 		self.figure.axis[indepVar].set_xlabel(x,labelpad=xpadding)
@@ -119,7 +129,7 @@ class ChEplot:
 		self.figure.axis[0].yaxis.set_major_locator(mpl.ticker.MultipleLocator(delta_y))
 		self.figure.axis[0].yaxis.set_minor_locator(mpl.ticker.MultipleLocator(delta_y/y_subTics))
 
-	
+	#Plot Features	
 	def showLegend(self, x=0.01, y=0.01, width=1, height=1, _loc='lower left', frame=True,_fontSize=10):
 		plt.legend(bbox_to_anchor=(x,y, width, height), loc=_loc, frameon=frame, fontsize=_fontSize)
 	
@@ -128,12 +138,17 @@ class ChEplot:
 		plt.rcParams['font.size'] = size 
 		plt.rcParams['axes.linewidth'] = linewidth 
 
-	#Presentation	
-	def showPlot(self): plt.show() 
+	#Presentation and saving the generated images	
+	def showPlot(self): 
+		"Shows the figure"
+		plt.show() 
 
 	def savePlot(self, filename="poop.png", _dpi=900, _transparent=False, _bbox_inches='tight'):
+		"Saves the Figure(graph) made to a file"
 		plt.savefig(filename, dpi=_dpi, transparent=_transparent, bbox_inches=_bbox_inches)
 	
-	def close(self): plt.close(self.figure)
+	def close(self): 
+		"Close the figure(window) that we were plotting in"
+		plt.close(self.figure)
 
 	

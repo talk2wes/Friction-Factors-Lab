@@ -26,8 +26,11 @@ while(i < len(plt.data)):
 
 print("what the new data looks like")
 newData = np.array([x, y, x_err, y_err])
-plt.setData(newData)
+plt.setData(newData, vars = 1)
 plt.printData()
+m , b = np.polyfit(x,y,1)
+
+x_mean = np.mean()
 
 
 

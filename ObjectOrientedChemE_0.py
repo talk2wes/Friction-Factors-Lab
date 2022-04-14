@@ -18,13 +18,24 @@ from sklearn.linear_model import LinearRegression
 print("\n\n\n")
 
 class ChEplot:
-	
+
+	def __init__(self):
+		self.figure=None
+		self.dataLabels=None
+		self.numDataVars=None
+		self.numDataFns=None
+		self.numDataSets=None
+		self.dataLabels=None
+		self.data=None
+
 	def loadCSV(self, filename: str, names: list, indepVars):
 		# if indepVars < 1 or indepVars > len(names): return
 		self.data = np.loadtxt(filename, unpack=True, delimiter=',',skiprows=0)	
-		# if indepVars > len(self.data): self.data = none; return
+		# if indepVars > self.numDataSets: self.data = none; return
 		self.dataLabels = names
-		self.indepVars = indepVars
+		self.numDataVars = indepVars
+		self.numDataSets = len(self.data) 
+		self.numDataFns = self.numDataSets - self.numDataVars
 	
 	@staticmethod
 	def	rSquared(x, y):
@@ -33,13 +44,13 @@ class ChEplot:
 		return y_reg.score(x,y)
 	
 	def printAllRSquared(self, precision=3):
-		for fn in range(self.indepVars, len(self.data)-self.indepVars):
-			for var in range(0, self.indepVars):
+		for fn in range(self.numDataVars, self.numDataSets):
+			for var in range(0, self.numDataVars):
 				rSquared = ChEplot.rSquared(self.data[0],self.data[fn])
 				rstr = "R^2 = %1." + str(precision) + "f" 
 				print("fn = ", fn, "var = ", var, "len")
-				print( rstr % rSquared, "\t", self.dataLabels[fn], \
-					"with respect to", self.dataLabels[0])
+				print( rstr % rSquared, "\t", self.dataLabels[fn - 1], \
+					"with respect to", self.dataLabels[var])
 	
 	def plotData(self, width, height):
 		self.figure = plt.figure(figsize=(width, height))
@@ -47,20 +58,20 @@ class ChEplot:
 		self.figure.axis = []
 		self.figure.axis.append(self.figure.add_axes([L, B, W, H]))
 		#find a way to exclude data
-		for var in range(0, self.indepVars):
-			for fn in range(self.indepVars, len(self.data)):
-				print("fn = ", fn, "len = ",len(self.data) )
+		for var in range(0, self.numDataVars):
+			for fn in range(self.numDataVars, self.numDataSets):
+				# print("fn = ", fn, "len = ",self.numDataSets )
 				x = self.data[var]
 				y = self.data[fn]
-				# mkr = self.dataMarkers[fn - self.indepVars]
-				lbl = self.dataLabels[fn - self.indepVars]
-				clr = self.dataColors[fn - self.indepVars]
+				# mkr = self.dataMarkers[fn - self.numDataVars]
+				lbl = self.dataLabels[fn - self.numDataVars]
+				clr = self.dataColors[fn - self.numDataVars]
 				# print(clr)
 				self.figure.axis[var].plot(x,y,'.',label=lbl,color=clr)
 
 	def plotLRegLines(self, width=0.5, style='-'):
-		for var in range(0, self.indepVars):
-			for fn in range(self.indepVars, len(self.data)):
+		for var in range(0, self.numDataVars):
+			for fn in range(self.numDataVars, self.numDataSets):
 				m, b = np.polyfit(self.data[0],self.data[fn],1)
 				y = (m * self.data[0]) + b
 				self.figure.axis[var].plot(self.data[0], y, linewidth=width ,linestyle=style)

@@ -1,0 +1,238 @@
+%% Created by Simon Hengchen and Nilo Pedrazzini for the Journal of Open Humanities Data (https://openhumanitiesdata.metajnl.com)
+
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{johd}
+\usepackage{dutchcal}
+
+\title{Lab 1: Friction Factors Lab}
+
+\author{Wesley Johanson, Chase Hartsell, Qiye Hu\\
+        \small University Of California, Santa Barbara \\
+
+        \small Chemical Engineering 180A Lab
+        }
+
+\date{April $13^{th}$, 2022}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract} 
+\noindent Frictional loss for fluid flow in a pipe was measured for unique pipe configurations.
+The friction factor decreases with increasing Reynolds number.
+Having bends/valves increases frictional loss and pressure drop throughout the pipe.
+  \end{abstract}
+
+\noindent\keywords{keyword 1; keyword 2; lower case except names, max 6 }\\
+
+\noindent\authorroles{For determining author roles, please use following taxonomy: \url{https://casrai.org/credit/}. Please list the roles for each author.} 
+
+\section*{Introduction}
+https://www.overleaf.com/project/625369e532850dbb191c2b45
+Turbulent flow, characterized in a pipe as Reynolds number >2100, causes fluid streamlines to be random in direction and magnitude, and axial momentum is transferred into the pipe wall and energy is lost as friction.
+
+\centering{\large$\mathcal{Re} = \frac{D\langle V_{z} \rangle\rho}{\mu}$}  \\ \raggedright
+
+
+Pressure drop across the pipe was correlated to the current reading by a transducer, and the friction factor was experimentally determined by relating the fluid flow rate to the pressure drop over a certain length.\\
+
+\centering{\large$2 \pi\mathrm{RL}\tau_{0}=\pi\mathrm{R^2}\left(\rho_{0}-\rho_{l}\right)$ \\ \raggedright}
+
+\centering{\large $ \tau_{0} =\left(\frac{1}{2} \rho\left< \nu_{z}\right>^2 \right)\mathcal{f} $ \\ \raggedright}
+\centering{\large $\mathcal{f} = \frac{\pi^2\mathrm{R}^5}{\rho\mathrm{Q}^2} \left( \frac{ \rho_{0} - \rho_{l}}{\mathrm{L}} \right)$} \\ \raggedright
+
+The velocity profile will be measured using a pitot tube to experimentally determine the laminar sublayer length.
+
+
+\section*{Experimental Methods}
+
+The difference between set pump speed and actual pump speed for centrifugal pumps (NPSHr and NPSHa) must be known to get consistent flow rates for each configuration.
+The pressure drop was measured using a pressure transducer, where the flow of fluid generates electrical current, and a linear relationship between current and pressure drop was observed to quickly calculate the pressure drop at a given flow rate.
+
+\centering{\large$Q = \frac{\pi \left( \rho_{0} - \rho_{l} \right) R^4 }{8\mu L} $} \\ \raggedright
+
+
+Flow rates were measured by diverting the water flow into a pre-weighed bucket for ~10 seconds, then the water was weighed and the flowrate was determined in kg/s and L/s. 
+Diagram of apparatus?
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/schematic.png}
+\caption{\label{fig1}Schematic of the experiment}
+\end{figure}
+
+\section*{Results}
+
+\section*{Discussion and Conclusions}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/frictionFactorEqns.png}
+\caption{\label{fig1}Different Friction Factor Models are valid within different ranges of the Reynolds's number}
+\end{figure}
+
+
+\section*{References}
+
+\centering \section*{Appendix A: Raw Data} \raggedright
+
+\centering\includegraphics[width=1\textwidth]{images/rawdata.png}\raggedright
+\caption{\label{fig1}\\Different Friction Factor Models are valid within different ranges of the Reynolds's number}
+
+
+\centering \section*{Appendix B: Sample Calculations} \raggedright
+
+\centering \section*{Appendix C: Program Files} \raggedright
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{In-text citations}
+This journal uses a style based on the APA system (see \href{https://openhumanitiesdata.metajnl.com/about/submissions/#References}{here}). \\
+The following are some basic citation commands in \LaTeX: \\
+
+\noindent
+\verb|\citet| $\rightarrow$ \citet{jenset&mcgil}\\
+\verb|\citet| $\rightarrow$ \citet{shree-a}\\
+\verb|\citep| $\rightarrow$ \citep{fabricius-hansen2012b}\\
+\verb|\citealp| $\rightarrow$ (\citealp{eckhoff2018a}; \citealp{fabricius-hansen2012b}; \citealp{shree-a})\\
+
+\subsubsection{Other simple functions}
+To add bullet points:
+
+\begin{itemize}
+    \item Some point
+    \item Another point
+\end{itemize}
+
+\noindent Or numbered points:
+
+\begin{itemize}
+    \item[1.] Some numbered point
+    \item[2.] Another numbered point
+\end{itemize}
+
+\noindent This is an example of footnote\footnote{This is a footnote}. \\
+
+\noindent This is a simple table:
+
+\begin{table}[H]
+\centering
+\label{tab1} % Label your table accordingly
+\caption{A caption.}
+\begin{tabular}{cccc}
+\hline
+1 & 2 & 3 & 4 \\
+\hline
+a & b & c & d\\
+e & f & g & h\\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent Please refer to your table using: Table \ref{tab1}.\\
+
+\noindent To add a figure, upload the figure into the \texttt{images} folder, and then embed it:
+
+\begin{figure}[H]
+\centering
+\includegraphics{images/Final_Plot_linear.png}
+\caption{\label{fig1}JOHD's logo.}
+\end{figure}
+
+\noindent To resize the figure:
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/image.jpeg}
+\caption{\label{fig3}JOHD's logo.}
+\end{figure}
+
+\noindent Please refer to your figures as: Figure \ref{fig1}, Figure \ref{fig2}, etc.
+
+
+\section{Dataset description}
+Here you can provide, if applicable, information about the dataset(s) whose creation, collection, management, access, processing or analysis have been discussed in this paper, following this schema:
+\paragraph{Object name} Typically the name of the file or file set in the repository.
+\paragraph{Format names and versions} E.g., ASCII, CSV, Autocad, EPS, JPEG, Excel, SQL, etc.
+\paragraph{Creation dates} The start and end dates of when the data was created (YYYY-MM-DD).
+\paragraph{Dataset creators} Please list anyone who helped to create the dataset (who may or may not be an author of the data paper), including their roles (using and affiliations).
+\paragraph{Language} Languages used in the dataset (i.e., for variable names etc.).
+\paragraph{License} The open license under which the data has been deposited (e.g., CC0). 
+\paragraph{Repository name} The name of the repository to which the data is uploaded. E.g., Figshare, Dataverse, etc. 
+\paragraph{Publication date} If already known, the date in which the dataset was published in the repository (YYYY-MM-DD).
+
+\section{Method}
+Describe the methods used in the study.
+
+\section{Results and discussion}
+Describe and discuss the results of the study.
+
+\section{Implications/Applications}
+Provide information about the implications of this research and/or how it can be applied.
+
+\section*{Acknowledgements}
+Please add any relevant acknowledgements to anyone else that assisted with the project in which the data was created but did not work directly on the data itself.
+
+\section*{Funding Statement}
+If the research resulted from funded research please list the funder and grant number here.
+
+\section*{Competing interests} 
+If any of the authors have any competing interests then these must be declared. If there are no competing interests to declare then the following statement should be present: The author(s) has/have no competing interests to declare.
+
+
+\bibliographystyle{johd}
+\bibliography{bib}
+
+\section*{Supplementary Files (optional)}
+Any supplementary/additional files that should link to the main publication must be listed, with a corresponding number, title and option description. Ideally the supplementary files are also cited in the main text.
+Note: supplementary files will not be typeset so they must be provided in their final form. They will be assigned a DOI and linked to from the publication.
+
+\end{document}

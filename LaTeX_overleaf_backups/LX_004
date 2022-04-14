@@ -1,0 +1,168 @@
+%% Created by Simon Hengchen and Nilo Pedrazzini for the Journal of Open Humanities Data (https://openhumanitiesdata.metajnl.com)
+
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{johd}
+\usepackage{dutchcal}
+
+\title{Lab 1: Friction Factors Lab}
+
+\author{Wesley Johanson, Chase Hartsell, Qiye Hu\\
+        \small University Of California, Santa Barbara \\
+
+        \small Chemical Engineering 180A Lab
+        }
+
+\date{April $13^{th}$, 2022}
+
+\begin{document}
+
+\maketitle
+
+
+\noindent 
+\begin{itemize}
+\item Frictional loss for incompressible fluid flow in a pipe was measured for unique pipe configurations.
+\item The friction factor decreases with increasing Reynolds number.
+\item Having bends/valves increases frictional loss and pressure drop throughout the pipe.
+
+\raggedright
+\section*{Introduction}
+\item Turbulent flow in a pipe, characterized by fluid flow with Reynolds number greater than 2100, causes frictional loss and a measurable pressure drop along the pipe.
+
+
+\begin{equation} \label{eq:1}
+\mathcal{Re} = \frac{D\langle V_{z} \rangle\rho}{\mu}
+\end{equation}
+
+
+\item The pressure drop can be related to the shear stress over the surface area of the viscous flow.\\
+
+\begin{equation} \label{eq:2} 
+2\pi\mathrm{RL}\tau_{0}=\pi\mathrm{R^2}\left(\rho_{0}-\rho_{l}\right) 
+\end{equation}
+
+\noindent \item \raggedright
+The friction factor compares the shear stress on the fluid to its kinetic energy per volume
+
+\begin{equation} \label{eq:3} 
+\tau_{0} =\left(\frac{1}{2} \rho\left< \nu_{z}\right>^2 \right)\mathcal{f} 
+\end{equation}
+
+\linebreak
+\linebreak
+
+\begin{equation} \label{eq:4} 
+\mathcal{f} = \frac{\pi^2\mathrm{R}^5}{\rho\mathrm{Q}^2} \left( \frac{ \rho_{0} - \rho_{l}}{\mathrm{L}} \right)
+\end{equation}
+
+\item The velocity profile will be measured using a pitot tube to experimentally determine the laminar sublayer length.
+
+\end{itemize}
+
+\section*{Experimental Methods}
+
+\begin{itemize}
+\item Low efficiency for centrifugal pumps (NPSHr and NPSHa) at low power prohibited us from running tests below 40\% pump power, \& the maximum flow rate/speed we could measure was 97.3\% power. 
+
+\item The pressure drop was measured using a pressure transducer, and a linear relationship between current and pressure drop was observed and measured using regression (calibration data 3.92mA = 0psi, 25mA = 20psi).
+\item Flow rates were measured by diverting the water flow into a bucket for ~10 seconds, then the water was weighed and volumetric flowrate was determined by the ratio of water volume per unit time.  
+\item A pitot tube will be used to measure the velocity profile and laminar sublayer region of the fluid flow.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/schematic.png}
+\caption{\label{fig1}Schematic of the experiment}
+\end{figure}
+
+\section*{Results}
+
+\begin{itemize}
+\item The highest pump efficiency was observed around 80\% power, where the actual flow rate was as close to the set flow rate as possible. Experiments were performed with speeds between 40\% and 97.3\%
+\item As the flow rate increased, the pressure drop and its corresponding friction factor increased but with diminishing effect.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/transducer_psi_mA.png}
+\caption{\label{fig1}Calibration to find the linear relationship between the current reading of a 25mA pressure transducer and the associated pressure drop across the tube. A reading of 3.92 mA corresponds to a 0 psi drop and 20mA shows the maximum reading of a 25 psi drop.}
+\end{figure}
+
+\item As the flow rate increased, the fluid became more turbulent, and we observed less frictional loss with highly turbulent flow.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/loglog_frictionFactor.png}
+\caption{\label{fig1} Fanning friction factor of turbulent, incompressible fluid flow in a pipe for a straight tube, 90 degree, and a 180 degree bend. Empirical relations for laminar and turbulent flow are listed to compare experimental data to theoretical models.}
+\end{figure}
+
+\item The friction that each bend contributed to the pressure drop was consistent throughout each unique configuration.
+\end{itemize}
+
+\section*{Discussion and Conclusions}
+\begin{itemize}
+    \item Using Fanning’s friction factor and Newton’s Law of Viscosity, very similar friction factors were calculated when compared to the empirical relations in App. B for each configuration of tubing. They were consistent with the turbulent flow regime equations, and not consistent with the laminar regime equation.
+    \item There were some discrepancies in the straight tube analysis, but the bent tube data was extremely consistent. Human error in calculating the flow rate for a few of the trials could have contributed to the discrepancies.
+    \item In the final report, we will calculate the adjustment factors for the loss caused by bends. We will also calculate the appropriate straight tube length that would give us the same friction loss as the bend.
+    \item Constants from known empirical relations may need to be adjusted to better describe our systems. 
+    \item Friction factor decreased as the flow rate became higher and more turbulent in all configurations.
+    \item Pressure drops were observed to be higher in bent configurations for the same flow rate.
+\end{itemize}
+
+
+
+\section*{References}
+
+Bird, R.B., W.E. Stewart, and E.N. Lightfoot, Transport Phenomena, John Wiley and Sons, New York (1960).
+\linebreak
+\linebreak McCabe, W.L., J.C. Smith, and P. Harriott, Unit Operations of Chemical Engineering, Fifth Edition, McGraw-Hill, Inc., New York (1993).
+
+\centering \section*{Appendix A: Raw Data} \raggedright
+
+\caption{\label{fig1}\\ Table 1: Different Friction Factor Models are valid within different ranges of the Reynolds's number}
+\linebreak \\ 
+\centering\includegraphics[width=1\textwidth]{images/rawdata.png}\raggedright
+
+
+\centering \section*{Appendix B: Sample Calculations} \raggedright
+
+\begin{equation} 
+Q=\frac{Volume}{time}
+\end{equation}
+
+\begin{equation} 
+\mathcal{f}=\frac{16}{\mathcal{Re}}
+\end{equation}
+
+
+\begin{equation} 
+\mathcal{f} = \frac{0.0791}{\mathcal{Re}^{1/4}}
+\end{equation}
+
+
+\begin{equation} 
+\mathcal{f} = \frac{0.0791}{\mathcal{Re}^{1/4}}
+\end{equation}
+
+\begin{equation} 
+\frac{1}{\mathcal{\sqrt{f}}} = 4.0Log_{10}(\mathcal{Re}\sqrt{f})-0.40
+\end{equation}
+
+
+
+\centering \section*{Appendix C: Program Files} \raggedright
+
+
+\section*{Plans for 2nd Session}
+\begin{itemize}
+    \item A pitot tube will measure the velocity profile of the turbulent flow at many different points along the diameter of the pipe.
+    \item This data will be used to calculate the shear stress from Newton's Law of Viscosity, so we can get an alternate view of the frictional loss.
+    \item We expect to get similar friction factors for similar flowrates and configurations by relating pressure drop to shear stress.
+    \item Integrating the velocity profile over the area will give the flowrate, and then average velocity.
+    \item Maximum velocity will be calculated, and a plot of velocity vs. radius will show the laminar sub layer region.
+\end{itemize}
+
+
+\end{document}

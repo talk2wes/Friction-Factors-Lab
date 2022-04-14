@@ -105,6 +105,8 @@ class ChEplot:
 				print( f"{rStr:<15}{self.dataLabels[fn-self.numDataVars]:<30}{'with respect to':<20}{self.dataLabels[var]:<10}")
 	
 	#Plot: Setters
+	def setFxns2Plot(self, fxns):
+		self.fxns2plot = fxns
 	def setDataStyles(self, styles: list):	
 		self.lineStyles = styles
 	def	setDataColors(self, colors: list): 	

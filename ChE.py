@@ -15,15 +15,44 @@ class ChEplot:
 		self.numDataFns=None
 		self.numDataSets=None
 		self.data=None
+	
+	#Print Info Functions
+	def	printAllData(self):
+		# print("figure =" ,i )
+		pass
+
 	#Data 
-	def loadCSV(self, filename: str, names: list, indepVars):
-		# if indepVars < 1 or indepVars > len(names): return
-		self.data = np.loadtxt(filename, unpack=True, delimiter=',',skiprows=0)	
-		# if indepVars > self.numDataSets: self.data = none; return
-		self.dataLabels = names
+	def loadCSV(self, filename: str, names=None, indepVars=1, skip=0):
+		self.data = np.loadtxt(filename, unpack=True, \
+												delimiter=',',skiprows=skip)	
+		if names is not None: self.dataLabels = names
 		self.numDataVars = indepVars
 		self.numDataSets = len(self.data) 
 		self.numDataFns = self.numDataSets - self.numDataVars
+	
+	def setDataLabel(self, names):
+		"""
+		Stores a list of strings into the instance, where each str in the list 
+		is the name of the corresponding column in the CSV file
+		"""
+		self.dataLabels = names
+	
+	def setData(self, data: list, vars=1, ):
+		"Replaces Data and performs same operations as loadCSV"
+		self.data = data
+		self.numDataVars = vars
+		self.numDataSets = len(self.data)
+		self.numDataFns = self.numDataSets - self.numDataVars
+
+
+	
+	def	printData(self):
+	"print all data points in self.data"
+		print(self.data)
+	
+	def setIndepVars(self, vars):
+		self.setIndepVars = vars
+
 
 	def plotData(self, width, height):
 		self.figure = plt.figure(figsize=(width, height))

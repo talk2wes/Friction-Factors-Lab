@@ -2,9 +2,7 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np 
-import pandas as pd
 import matplotlib.font_manager as fm
-from pylab import cm
 from sklearn.linear_model import LinearRegression
 
 print("\n\n\n")

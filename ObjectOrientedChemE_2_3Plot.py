@@ -22,12 +22,12 @@ class ChEplot:
 	def __init__(self):
 		self.figure=None
 		self.dataLabels=None
+		self.fnLabels=None
 		self.numDataVars=None
 		self.numDataFns=None
 		self.numDataSets=None
-		self.dataLabels=None
 		self.data=None
-
+	#Data 
 	def loadCSV(self, filename: str, names: list, indepVars):
 		# if indepVars < 1 or indepVars > len(names): return
 		self.data = np.loadtxt(filename, unpack=True, delimiter=',',skiprows=0)	
@@ -47,9 +47,13 @@ class ChEplot:
 			for fn in range(self.numDataVars, self.numDataSets):
 				x = self.data[var]
 				y = self.data[fn]
-				lbl = self.dataLabels[fn - self.numDataVars]
+				lbl = self.fnLabels[fn - self.numDataVars]
 				clr = self.dataColors[fn - self.numDataVars]
 				self.figure.axis[var].plot(x,y,'.',label=lbl,color=clr)
+	
+	def segmentData(self):
+		pass
+
 
 	#Linear Regression
 	@staticmethod
@@ -69,17 +73,18 @@ class ChEplot:
 		self.LRegLineColors = colors
 
 	def printAllRSquared(self, precision=3):
+		print(self.dataLabels)
 		for fn in range(self.numDataVars, self.numDataSets):
 			for var in range(0, self.numDataVars):
 				rSquared = ChEplot.rSquared(self.data[0],self.data[fn])
 				rstr = "R^2 = %1." + str(precision) + "f" 
-				print( rstr % rSquared, "\t", self.dataLabels[fn - 1], \
+				print( rstr % rSquared, "\t", self.dataLabels[fn - self.numDataVars], \
 					"with respect to", self.dataLabels[var])
 	
 	#Plot parameters	
 	def setDataStyles(self, styles: list):		self.lineStyles = styles
 	def	setDataColors(self, colors: list): 		self.dataColors = colors 
-	def setDataLabels(self, labels: list[str]):	self.dataLabels = labels
+	def setFnLabels(self, labels: list[str]):	self.fnLabels = labels
 
 	def setAxisLabels(self, x: str, y:str, indepVar=0, xpadding=5, ypadding=5):
 		self.figure.axis[indepVar].set_xlabel(x,labelpad=xpadding)
@@ -122,7 +127,7 @@ plot = ChEplot()
 #Data
 plot.loadCSV('logRe_logf.csv', dataNames, indepVars=1)
 #Plotting
-plot.setDataLabels(fnLabels)
+plot.setFnLabels(fnLabels)
 plot.setDataColors(['b','g','r'])
 plot.plotData(width=6,height=6)
 #Regression
@@ -136,5 +141,5 @@ plot.showLegend()
 plot.changeFont()
 #Presentation
 plot.showPlot()
-plot.savePlot(_dpi=4000)
+plot.savePlot(_dpi=300)
 	

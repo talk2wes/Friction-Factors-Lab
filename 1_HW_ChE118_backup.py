@@ -29,11 +29,14 @@ plt.printData()
 
 
 
+#Define Data
 labels = ["Pressure [Bar]", "Signal [Volts]", "Pressure_xError [bar]",\
 		"Signal_yError [Volts]" ]
+#Set Data
 plt.setData(np.array([x, y, x_err, y_err]), vars = 1)
 plt.setDataLabel(labels)
-
+#Process Data
+#Plot Data
 plt.plotData()
 
 

@@ -18,32 +18,28 @@ class ChEplot:
 		self.fxns2plot=None
 
 	#Data setter/getter/modifier functions
-	# def loadCSV(self, filename: str,folder=None, names=None, indepVars=1, skip=0):
-	# 	"""Loads each column of data from the CSV file into a row of a numpy
-	# 	array stored in self.data
-		
-	# 	'names' is a list of names for the data sets in each col of the CSV"""
-	# 	self.data = np.loadtxt(filename, unpack=True, \
-	# 											delimiter=',',skiprows=skip)	
-	# 	if names is not None: self.dataLabels = names
-	# 	self.numDataVars = indepVars
-	# 	self.numDataSets = len(self.data) 
-	# 	self.numDataFns = self.numDataSets - self.numDataVars
-
-
-			#Data 
-	def loadCSV(self, filename: str, names: list, indepVars):
+	def loadCSV(self, filename: str,folder=None, names=None, indepVars=1, skip=0):
 		"""Loads each column of data from the CSV file into a row of a numpy
-	 	array stored in self.data
+		array stored in self.data
 		
-	 	'names' is a list of names for the data sets in each col of the CSV"""
-		# if indepVars < 1 or indepVars > len(names): return
-		self.data = np.loadtxt(filename, unpack=True, delimiter=',',skiprows=0)	
-		# if indepVars > self.numDataSets: self.data = none; return
-		self.dataLabels = names
+		'names' is a list of names for the data sets in each col of the CSV"""
+		self.data = np.loadtxt(filename, unpack=True, \
+												delimiter=',',skiprows=skip)	
+		if names is not None: self.dataLabels = names
 		self.numDataVars = indepVars
 		self.numDataSets = len(self.data) 
 		self.numDataFns = self.numDataSets - self.numDataVars
+
+
+	# 		#Data 
+	# def loadCSV(self, filename: str, names: list, indepVars):
+	# 	# if indepVars < 1 or indepVars > len(names): return
+	# 	self.data = np.loadtxt(filename, unpack=True, delimiter=',',skiprows=0)	
+	# 	# if indepVars > self.numDataSets: self.data = none; return
+	# 	self.dataLabels = names
+	# 	self.numDataVars = indepVars
+	# 	self.numDataSets = len(self.data) 
+	# 	self.numDataFns = self.numDataSets - self.numDataVars
 		
 	def segmentData(self):
 		pass

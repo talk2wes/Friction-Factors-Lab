@@ -5,38 +5,20 @@ import numpy as np
 import matplotlib.font_manager as fm
 from sklearn.linear_model import LinearRegression
 
+print("\n\n\n")
+
 class ChEplot:
+
 	def __init__(self):
 		self.figure=None
 		self.dataLabels=None
 		self.fnLabels=None
-		#Counting Elements
 		self.numDataVars=None
 		self.numDataFns=None
 		self.numDataSets=None
 		self.data=None
-		self.fxns2plot=None
-
-	#Data setter/getter/modifier functions
-	# def loadCSV(self, filename: str,folder=None, names=None, indepVars=1, skip=0):
-	# 	"""Loads each column of data from the CSV file into a row of a numpy
-	# 	array stored in self.data
-		
-	# 	'names' is a list of names for the data sets in each col of the CSV"""
-	# 	self.data = np.loadtxt(filename, unpack=True, \
-	# 											delimiter=',',skiprows=skip)	
-	# 	if names is not None: self.dataLabels = names
-	# 	self.numDataVars = indepVars
-	# 	self.numDataSets = len(self.data) 
-	# 	self.numDataFns = self.numDataSets - self.numDataVars
-
-
-			#Data 
+	#Data 
 	def loadCSV(self, filename: str, names: list, indepVars):
-		"""Loads each column of data from the CSV file into a row of a numpy
-	 	array stored in self.data
-		
-	 	'names' is a list of names for the data sets in each col of the CSV"""
 		# if indepVars < 1 or indepVars > len(names): return
 		self.data = np.loadtxt(filename, unpack=True, delimiter=',',skiprows=0)	
 		# if indepVars > self.numDataSets: self.data = none; return
@@ -44,58 +26,8 @@ class ChEplot:
 		self.numDataVars = indepVars
 		self.numDataSets = len(self.data) 
 		self.numDataFns = self.numDataSets - self.numDataVars
-		
-	def segmentData(self):
-		pass
 
-	#Printers
-	def	printAllData(self):
-		print( 
-			"\n",self.figure
-			,"\n",self.dataLabels
-			,"\n",self.fnLabels
-			,"\n",self.numDataVars
-			,"\n",self.numDataFns
-			,"\n",self.numDataSets
-			,"\n",self.data
-			,"\n",self.fxns2plot)
-
-
-		pass
-
-	def	printData(self):
-		"print all data points in self.data"
-		print(self.data)
-
-	def printMeans(self):
-		"Prints the  mean value of each row vector in self.data"
-		for i in range(0, self.numDataSets):
-			outputStr = "the mean of "
-			if self.dataLabels[i] is not None:
-				outputStr += self.dataLabels[i]
-			outputStr += "\t\tis " + str(np.mean(self.data[i])) 
-			
-	#Setters	
-	def setDataLabel(self, names):
-		"""
-		Stores a list of strings into the instance, where each str in the list 
-		is the name of the corresponding column in the CSV file
-		"""
-		self.dataLabels = names
-	
-	def setData(self, data: list, vars=1, ):
-		"Replaces Data and performs same operations as loadCSV"
-		self.data = data
-		self.numDataVars = vars
-		self.numDataSets = len(self.data)
-		self.numDataFns = self.numDataSets - self.numDataVars
-
-	def setIndepVars(self, vars):
-		"Vars are the first arrays in the self.data matrix"
-		self.setIndepVars = vars
-
-	#Plotting
-	def plotData(self, width, height, fxns2graph=None):
+	def plotData(self, width, height):
 		self.figure = plt.figure(figsize=(width, height))
 		L, B, W, H = [0.15, 0.1, 0.80, 0.85]
 		self.figure.axis = []
@@ -109,6 +41,16 @@ class ChEplot:
 				clr = self.dataColors[fn - self.numDataVars]
 				self.figure.axis[var].plot(x,y,'.',label=lbl,color=clr)
 	
+	def segmentData(self):
+		pass
+
+	#Linear Regression
+	@staticmethod
+	def	rSquared(x, y):
+		x = x.reshape((-1,1))
+		y_reg = LinearRegression().fit(x,y)
+		return y_reg.score(x,y)
+
 	def plotLRegLines(self, width=0.5, style='-', color='b'):
 		for var in range(0, self.numDataVars):
 			for fn in range(self.numDataVars, self.numDataSets):
@@ -118,16 +60,6 @@ class ChEplot:
 					color=self.LRegLineColors[fn-self.numDataVars], \
 						linewidth=width ,linestyle=style)
 	
-	def plotErrorBars(self):
-		pass
-	
-	#Linear Regression & Statistics
-	@staticmethod
-	def	rSquared(x, y):
-		x = x.reshape((-1,1))
-		y_reg = LinearRegression().fit(x,y)
-		return y_reg.score(x,y)
-		
 	def setLRegLineColors(self, colors=[]):
 		self.LRegLineColors = colors
 
@@ -137,23 +69,12 @@ class ChEplot:
 				rSquared = ChEplot.rSquared(self.data[0],self.data[fn])
 				rStr = "R^2 = %1." + str(precision) + "f" 
 				rStr = rStr % rSquared
-				if rStr is None: print("Error_0")	
-				if self.dataLabels is None: print("Error_1")	
 				print( f"{rStr:<15}{self.dataLabels[fn-self.numDataVars]:<30}{'with respect to':<20}{self.dataLabels[var]:<10}")
 	
-	# def confInterv(self)
-	
-	#Plot: Setters
-	def setFxns2Plot(self, fxns):
-		self.fxns2plot = fxns
-
-	def setDataStyles(self, styles: list):	
-		self.lineStyles = styles
-	def	setDataColors(self, colors: list): 	
-		self.dataColors = colors 
-		self.setLRegLineColors(colors)
-	def setFnLabels(self, labels: list[str]):	
-		self.fnLabels = labels
+	#Plot parameters	
+	def setDataStyles(self, styles: list):		self.lineStyles = styles
+	def	setDataColors(self, colors: list): 	self.dataColors = colors; self.setLRegLineColors(colors);
+	def setFnLabels(self, labels: list[str]):	self.fnLabels = labels
 
 	def setAxisLabels(self, x: str, y:str, indepVar=0, xpadding=5, ypadding=5):
 		self.figure.axis[indepVar].set_xlabel(x,labelpad=xpadding)
@@ -171,7 +92,7 @@ class ChEplot:
 		self.figure.axis[0].yaxis.set_major_locator(mpl.ticker.MultipleLocator(delta_y))
 		self.figure.axis[0].yaxis.set_minor_locator(mpl.ticker.MultipleLocator(delta_y/y_subTics))
 
-	#Plot Features	
+	
 	def showLegend(self, x=0.01, y=0.01, width=1, height=1, _loc='lower left', frame=True,_fontSize=10):
 		plt.legend(bbox_to_anchor=(x,y, width, height), loc=_loc, frameon=frame, fontsize=_fontSize)
 	
@@ -180,17 +101,39 @@ class ChEplot:
 		plt.rcParams['font.size'] = size 
 		plt.rcParams['axes.linewidth'] = linewidth 
 
-	#Presentation and saving the generated images	
-	def showPlot(self): 
-		"Shows the figure"
-		plt.show() 
+	#Presentation	
+	def showPlot(self): plt.show() 
 
 	def savePlot(self, filename="poop.png", _dpi=900, _transparent=False, _bbox_inches='tight'):
-		"Saves the Figure(graph) made to a file"
 		plt.savefig(filename, dpi=_dpi, transparent=_transparent, bbox_inches=_bbox_inches)
 	
-	def close(self): 
-		"Close the figure(window) that we were plotting in"
-		plt.close(self.figure)
+	def close(self): plt.close(self.figure)
 
+
+dataNames = ["Log_10(Reynold's Number)", "Log_10(Friction Factor)[Eqn 6]", \
+	"Log_10(Friction Factor)[Eqn15]", "Log_10(Friction Factor)[Eqn16]"]
+fnLabels= ["Fanning $\mathcal{f}$", "$\mathcal{Re}<2\cdot10^3$", \
+	"$2100<\mathcal{Re} < 10^5$" ]
+
+
+plot = ChEplot()
+#Data
+plot.loadCSV('logRe_logf.csv', dataNames, indepVars=1)
+#Plotting
+plot.setFnLabels(fnLabels)
+plot.setDataColors(['#89CFF0','#800020','#301934'])
+plot.plotData(width=6,height=6)
+#Regression
+plot.plotLRegLines(width=0.1)
+plot.printAllRSquared()
+#Plot Parameters 
+plot.setAxisLabels("$Log_{10}(\mathcal{Re})$", "$Log_{10}(\mathcal{f})$", xpadding=5, ypadding=5)
+plot.setTicProps()
+plot.setNumTics(0.1, 0.25, 3,3)
+plot.showLegend()
+plot.changeFont()
+#Presentation
+# plot.close()
+plot.showPlot()
+plot.savePlot(filename="log(Re)_vs_log(f).png",_dpi=600)
 	
